@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1"/>
+  <title>Bible Mood Matcher</title>
+  <meta name="description" content="Match your mood to God's Word. Handpicked NIV Bible verses for every emotional season of life."/>
+  <meta property="og:title" content="Bible Mood Matcher"/>
+  <meta property="og:description" content="Select your mood and receive handpicked Bible verses."/>
+  <link rel="icon" href="icons/bible.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="logo" id="logoHome">
+    <img src="icons/bible.png" alt="Bible" class="logo-img"/>
+    <div><div class="logo-name">Bible Mood Matcher</div><div class="logo-sub">Finding Peace Through Scripture</div></div>
+  </div>
+  <div class="search-wrap">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search verses, moods, topics…" autocomplete="off"/>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════
+     VIEW: HOME
+════════════════════════════════════ -->
+<div class="view active" id="viewHome"><div class="mc">
+  <section class="hero">
+    <div class="badge"><span class="badge-dot"></span>Spiritual Guidance Through Your Emotions</div>
+    <h1>Welcome to <em>Bible Mood</em> Matcher</h1>
+    <p>Select your emotional state and receive handpicked Bible verses with deep spiritual reflections that speak directly to your heart.</p>
+    <div class="stats-row">
+      <div class="stat-chip" id="streakChip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <strong id="streakNum">1</strong><span>Day Streak</span>
+      </div>
+      <div class="stat-chip" id="favsChip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <strong id="favsNum">0</strong><span>Saved Verses</span>
+      </div>
+      <div class="stat-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <strong>60+</strong><span>NIV Verses</span>
+      </div>
+    </div>
+    <div class="pills">
+      <div class="pill"><img src="icons/guidance.png" alt="">Spiritual Guidance</div>
+      <div class="pill"><img src="icons/bibleicon.png" alt="">Biblical Verses</div>
+      <div class="pill"><img src="icons/support.png" alt="">Emotional Support</div>
+    </div>
+  </section>
+
+  <!-- Verse of the Day -->
+  <div class="votd-section">
+    <div class="votd-card">
+      <div class="votd-left">
+        <div class="votd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="votd-date" id="votdDate"></div>
+      </div>
+      <div class="votd-mid">
+        <div class="votd-label">Verse of the Day</div>
+        <div class="votd-text" id="votdText"></div>
+        <div class="votd-ref" id="votdRef"></div>
+      </div>
+      <div class="votd-right">
+        <button class="votd-btn" id="votdCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+        <button class="votd-btn" id="votdSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Save</button>
+        <button class="votd-btn" id="votdFocus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 12h1M20 12h1M12 3v1M12 20v1M5.64 5.64l.7.7M17.66 17.66l.7.7M17.66 6.34l-.7.7M5.64 18.36l-.7.7"/></svg>Focus</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mood Selector -->
+  <section class="moods-sec">
+    <div class="sec-head">
+      <h2>How are you feeling today?</h2>
+      <p>Choose your mood and let God's Word speak directly to your heart through Scripture and deep spiritual reflections.</p>
+    </div>
+    <div class="moods-grid" id="moodsGrid">
+      <button class="mc-btn m-happy"    data-mood="happy"    aria-label="Happy"><div class="mc-inner"><div class="mc-icon"><img src="icons/happy.png" alt="Happy"></div><span class="mc-name">Happy</span><span class="mc-desc">Feeling joyful &amp; grateful</span></div></button>
+      <button class="mc-btn m-angry"    data-mood="angry"    aria-label="Angry"><div class="mc-inner"><div class="mc-icon"><img src="icons/angry.png" alt="Angry"></div><span class="mc-name">Angry</span><span class="mc-desc">Feeling upset or frustrated</span></div></button>
+      <button class="mc-btn m-sad"      data-mood="sad"      aria-label="Sad"><div class="mc-inner"><div class="mc-icon"><img src="icons/sad.png" alt="Sad"></div><span class="mc-name">Sad</span><span class="mc-desc">Feeling down or distressed</span></div></button>
+      <button class="mc-btn m-grateful" data-mood="grateful" aria-label="Grateful"><div class="mc-inner"><div class="mc-icon"><img src="icons/grateful.png" alt="Grateful"></div><span class="mc-name">Grateful</span><span class="mc-desc">Feeling thankful to God</span></div></button>
+      <button class="mc-btn m-anxious"  data-mood="anxious"  aria-label="Anxious"><div class="mc-inner"><div class="mc-icon"><img src="icons/anxious.png" alt="Anxious"></div><span class="mc-name">Anxious</span><span class="mc-desc">Worried or nervous</span></div></button>
+    </div>
+  </section>
+</div></div>
+
+<!-- ═══════════════════════════════════
+     VIEW: VERSES
+════════════════════════════════════ -->
+<div class="view" id="viewVerses"><div class="mc">
+  <div class="back-bar">
+    <button class="back-btn" id="backBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back to Home</button>
+    <div class="verse-hdr-right">
+      <button class="focus-mode-btn" id="focusBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 12h1M20 12h1M12 3v1M12 20v1"/></svg>Focus</button>
+      <button class="save-all-btn" id="saveAllBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Save All</button>
+    </div>
+  </div>
+  <div class="vbanner" id="vbanner"><div class="vban-icon"><img id="banImg" src="" alt=""></div><div class="vban-txt"><h2 id="banTitle"></h2><p id="banDesc"></p></div><div class="vban-badge" id="banBadge"></div></div>
+  <div class="intro-q" id="introQ"></div>
+  <div class="carousel-wrap">
+    <div class="c-progress"><div class="c-progress-bar"><div class="c-progress-fill" id="cFill"></div></div><div class="c-progress-text" id="cText"></div></div>
+    <div class="c-track" id="cTrack"></div>
+    <div class="c-nav">
+      <button class="c-arrow" id="cPrev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="c-dots" id="cDots"></div>
+      <button class="c-arrow" id="cNext"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+    <p class="kbd-hint">Use <kbd>←</kbd> <kbd>→</kbd> arrow keys or swipe to navigate</p>
+  </div>
+</div></div>
+
+<!-- ═══════════════════════════════════
+     VIEW: FAVORITES
+════════════════════════════════════ -->
+<div class="view" id="viewFavorites"><div class="mc">
+  <div class="fav-hdr"><h2>Your Saved Verses</h2><p>Bookmarked verses for reflection, prayer, and daily encouragement.</p><div class="fav-count"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="favCountLabel">0 saved</span></div></div>
+  <div class="fav-body"><div id="favList"></div></div>
+</div></div>
+
+<!-- ═══════════════════════════════════
+     VIEW: READING PLANS
+════════════════════════════════════ -->
+<div class="view" id="viewPlans"><div class="mc">
+  <div id="plansMain">
+    <div class="plans-hdr"><h2>Reading Plans</h2><p>Guided day-by-day journeys through God's Word, crafted for your spiritual growth.</p></div>
+    <div class="plans-body"><div class="plans-grid" id="plansGrid"></div></div>
+  </div>
+  <div id="planDetail" style="display:none">
+    <div class="plan-detail-hdr">
+      <button class="back-btn" id="planBackBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>All Plans</button>
+    </div>
+    <div class="plan-day-list" id="planDayList"></div>
+  </div>
+</div></div>
+
+<!-- ═══════════════════════════════════
+     VIEW: CONTACT
+════════════════════════════════════ -->
+<div class="view" id="viewContact"><div class="mc">
+  <div class="contact-hdr"><h2>Get in Touch</h2><p>Have a suggestion, found a verse to add, or want to share how this app has blessed you? We'd love to hear from you.</p></div>
+  <div class="contact-body">
+    <div class="contact-grid">
+      <div class="c-info-card">
+        <h3>Connect With Us</h3>
+        <div class="ci-item"><div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="ci-text"><strong>Email</strong><span>henokbirhanu614@gmail.com</span></div></div>
+        <div class="ci-item"><div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="ci-text"><strong>Response Time</strong><span>Within 24 hours</span></div></div>
+        <div class="ci-item"><div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="ci-text"><strong>Scripture Version</strong><span>New International Version (NIV)</span></div></div>
+        <div class="ci-item"><div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="ci-text"><strong>Available</strong><span>24/7 — Free Forever</span></div></div>
+        <div class="social-row">
+          <button class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.56v14.91A4.54 4.54 0 0 1 19.45 24H4.55A4.54 4.54 0 0 1 0 19.47V4.56A4.54 4.54 0 0 1 4.55 0h14.9A4.54 4.54 0 0 1 24 4.56zm-7.2 0h-2.4c-.9 0-1.2.45-1.2 1.2v1.8h3.6l-.48 3.6H13.2V19.2H9.6V11.16H7.2V7.56H9.6V5.28A4.29 4.29 0 0 1 14.16 0a23.9 23.9 0 0 1 2.64.12z"/></svg>Facebook</button>
+          <button class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg>Twitter</button>
+          <button class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>Instagram</button>
+        </div>
+      </div>
+      <div class="c-form-card">
+        <h3>Send a Message</h3>
+        <div id="contactFormBody">
+          <div class="form-grid">
+            <div class="form-row"><label>First Name *</label><input type="text" id="fName" placeholder="Your first name"/></div>
+            <div class="form-row"><label>Last Name</label><input type="text" id="fLast" placeholder="Your last name"/></div>
+          </div>
+          <div class="form-row"><label>Email Address *</label><input type="email" id="fEmail" placeholder="you@example.com"/></div>
+          <div class="form-row"><label>Subject</label>
+            <select id="fSubject">
+              <option value="General Enquiry">General Enquiry</option>
+              <option value="Suggest a Verse">Suggest a Verse</option>
+              <option value="Report an Issue">Report an Issue</option>
+              <option value="Share a Testimony">Share a Testimony</option>
+              <option value="Suggest a New Mood">Suggest a New Mood</option>
+              <option value="Partnership Enquiry">Partnership Enquiry</option>
+            </select>
+          </div>
+          <div class="form-row"><label>Message *</label><textarea id="fMessage" placeholder="Share your thoughts, suggestions, or testimony…"></textarea></div>
+          <button class="submit-btn" id="submitBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Message</button>
+          <div class="form-error" id="formError">Please fill in all required fields (*) before sending.</div>
+        </div>
+        <div class="form-thanks" id="formThanks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h3>Message Sent!</h3>
+          <p>Thank you for reaching out. We'll get back to you at <strong id="thankEmail"></strong> within 24 hours. God bless you!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-l"><strong>Bible Mood Matcher</strong><span>Finding Peace Through Scripture</span></div>
+  <div class="ft-r">&copy; 2026 Bible Mood Matcher &mdash; All scriptures NIV</div>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="stt" id="stt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<!-- ═══════════════════════════════════
+     BOTTOM NAVIGATION
+════════════════════════════════════ -->
+<nav class="bnav">
+  <button class="bni active" data-view="viewHome" id="bnHome">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+  </button>
+  <button class="bni" data-view="viewPlans" id="bnPlans">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Plans
+  </button>
+  <button class="bni bni-fav" data-view="viewFavorites" id="bnFav">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Saved
+  </button>
+  <button class="bni" data-view="viewContact" id="bnContact">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Contact
+  </button>
+  <button class="bni" id="bnAbout">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>About
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════════
+     ABOUT MODAL
+════════════════════════════════════ -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <button class="m-close" id="mClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <img src="icons/bible.png" alt="" class="modal-logo"/>
+    <h3>About Bible Mood Matcher</h3>
+    <p>Bible Mood Matcher is a spiritual companion that connects your emotional state with the comforting, encouraging, and transformative words of Scripture.</p>
+    <p>We believe God's Word speaks to every heart in every season — joy, anger, sadness, gratitude, or anxiety. Select a mood, swipe through handpicked verses with deep reflections, save favourites, and journal personal notes.</p>
+    <p>Reading plans guide you through multi-day devotional journeys, and Prayer Focus Mode lets you meditate on a single verse in stillness.</p>
+    <p style="font-size:11px;color:#aaa;margin-top:8px">All scriptures from the New International Version (NIV). &copy; 2026 Bible Mood Matcher</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     PRAYER FOCUS MODAL
+════════════════════════════════════ -->
+<div class="focus-overlay" id="focusOverlay">
+  <button class="focus-close" id="focusClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <div class="focus-label">Prayer &amp; Meditation Focus</div>
+  <div class="focus-verse" id="focusVerse"></div>
+  <div class="focus-ref" id="focusRef"></div>
+  <div class="focus-timer" id="focusTimer">0:00</div>
+  <div class="focus-actions">
+    <button class="focus-btn" id="focusTimerToggle">Start Timer</button>
+    <button class="focus-btn" onclick="copyFocusVerse()">Copy</button>
+    <button class="focus-btn primary" id="focusAmen">Amen</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
